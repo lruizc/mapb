@@ -361,7 +361,7 @@
     </svg>
     <div class="text-block fade-in">
       <p>te deseo la mejor semana posible..<br>
-        yo caminaré mucho pero será con Mónica en mi cabeza,<br><br>
+        yo caminaré mucho pero será con Morenita en mi cabeza,<br><br>
         Pregunté a dónde querrías viajar? ..</p>
       <div class="divider"></div>
       <div class="quote">Lo que me gusta y disfruto lo imagino con la persona que quiero</div>
@@ -413,6 +413,16 @@
     const sections = Array.from(document.querySelectorAll('section'));
     let current = 0;
     let animating = false;
+    let autoPlayTimer;
+
+    function resetAutoPlay() {
+      clearTimeout(autoPlayTimer);
+      if (current < sections.length - 1) {
+        autoPlayTimer = setTimeout(() => {
+          goTo(current + 1);
+        }, 15000);
+      }
+    }
 
     function goTo(index) {
       if (index < 0 || index >= sections.length || animating) return;
@@ -421,6 +431,7 @@
       sections[current].scrollIntoView({ behavior: 'smooth' });
       updateArrow();
       setTimeout(() => { animating = false; }, 800);
+      resetAutoPlay();
     }
 
     function updateArrow() {
@@ -440,20 +451,28 @@
         e.preventDefault();
         goTo(current - 1);
       }
+      resetAutoPlay();
     });
 
     let touchY = 0;
-    document.addEventListener('touchstart', e => { touchY = e.touches[0].clientY; }, { passive: true });
+    document.addEventListener('touchstart', e => { 
+      touchY = e.touches[0].clientY; 
+      resetAutoPlay();
+    }, { passive: true });
+
     document.addEventListener('touchend', e => {
       const diff = touchY - e.changedTouches[0].clientY;
       if (Math.abs(diff) > 50) goTo(diff > 0 ? current + 1 : current - 1);
     }, { passive: true });
+
+    window.addEventListener('wheel', resetAutoPlay, { passive: true });
 
     const scrollObserver = new IntersectionObserver(entries => {
       entries.forEach(e => {
         if (e.isIntersecting) {
           current = sections.indexOf(e.target);
           updateArrow();
+          resetAutoPlay();
         }
       });
     }, { threshold: 0.5 });
