@@ -163,14 +163,6 @@
 
     .img-duo img:hover { filter: brightness(1.05) saturate(1.05); }
 
-    .img-caption {
-      font-size: 0.85rem;
-      color: #2a5a3a;
-      letter-spacing: 0.12em;
-      text-align: center;
-      margin-top: 0.8rem;
-      font-style: italic;
-    }
 
     .fade-in {
       opacity: 0;
@@ -231,7 +223,7 @@
       position: relative;
       display: block;
       border: 1px solid #1a3a28;
-      max-width: min(420px, 90vw);
+      max-width: min(630px, 92vw);
       border-radius: 4px;
       overflow: hidden;
       transition: filter 0.3s;
@@ -308,7 +300,6 @@
     </div>
     <div class="img-wrap fade-in">
       <img src="images/aguila.jpg" alt="Tú y las aves">
-      <div class="img-caption">tú y las aves</div>
     </div>
   </section>
 
@@ -377,7 +368,6 @@
     </div>
     <div class="img-wrap fade-in">
       <img src="images/liberdade_melancolico.png" alt="Barrio Liberdade, São Paulo">
-      <div class="img-caption">un día llegaremos</div>
     </div>
   </section>
 
@@ -515,7 +505,7 @@
       const ytContainer = document.getElementById('yt-container');
       const linkBlock = ytContainer.querySelector('.yt-link');
       if (linkBlock) {
-        linkBlock.outerHTML = '<iframe style="border: 1px solid #1a3a28; border-radius: 4px; max-width: min(420px, 90vw); width: 420px; height: 236px;" src="https://www.youtube.com/embed/AY032xVyMFA?autoplay=1" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen frameborder="0"></iframe>';
+        linkBlock.outerHTML = '<iframe style="border: 1px solid #1a3a28; border-radius: 4px; max-width: min(630px, 92vw); width: 630px; height: 354px;" src="https://www.youtube.com/embed/AY032xVyMFA?autoplay=1" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen frameborder="0"></iframe>';
       }
     }
 
