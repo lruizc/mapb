@@ -1,0 +1,303 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Para ti</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;1,300;1,400&display=swap" rel="stylesheet">
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      background: #030a07;
+      color: #fff;
+      font-family: 'Cormorant Garamond', serif;
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      overflow: hidden;
+    }
+
+    .gate {
+      text-align: center;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 3rem;
+      animation: fadeIn 2s ease;
+      position: relative;
+      z-index: 1;
+    }
+
+    h1 {
+      font-size: clamp(2.8rem, 8vw, 6rem);
+      font-weight: 300;
+      letter-spacing: 0.2em;
+      background: linear-gradient(135deg, #a8d8b0 0%, #6fb8a0 40%, #4a9aba 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      filter: drop-shadow(0 0 22px rgba(100, 190, 160, 0.3));
+    }
+
+    .input-wrap {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 1.6rem;
+    }
+
+    .dashes {
+      display: flex;
+      gap: 14px;
+      margin-bottom: 4px;
+      opacity: 0.25;
+    }
+
+    .dashes span {
+      display: block;
+      width: 22px;
+      height: 2px;
+      background: #6fb8a0;
+      border-radius: 2px;
+    }
+
+    input[type="password"] {
+      background: transparent;
+      border: none;
+      border-bottom: 1px solid #2a4a38;
+      color: #d0ead8;
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 2rem;
+      font-weight: 300;
+      letter-spacing: 0.5em;
+      text-align: center;
+      padding: 0.5rem 1rem;
+      width: 280px;
+      outline: none;
+      transition: border-color 0.4s;
+    }
+
+    input[type="password"]:focus {
+      border-bottom-color: #6fb8a0;
+    }
+
+    input[type="password"]::placeholder {
+      opacity: 0;
+    }
+
+    button {
+      background: transparent;
+      border: 1px solid #2a5a45;
+      color: #6fb8a0;
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 1.3rem;
+      letter-spacing: 0.35em;
+      padding: 0.85rem 3.2rem;
+      cursor: pointer;
+      transition: all 0.4s ease;
+      text-transform: uppercase;
+      position: relative;
+      overflow: hidden;
+    }
+
+    button::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(135deg, rgba(111,184,160,0.1), rgba(74,154,186,0.1));
+      opacity: 0;
+      transition: opacity 0.4s;
+    }
+
+    button:hover::before { opacity: 1; }
+
+    button:hover {
+      border-color: #6fb8a0;
+      color: #c0e8d8;
+      box-shadow: 0 0 24px rgba(100, 190, 160, 0.15);
+      letter-spacing: 0.45em;
+    }
+
+    .error {
+      font-style: italic;
+      color: #5ca888;
+      font-size: 1.5rem;
+      letter-spacing: 0.04em;
+      min-height: 2.2rem;
+      opacity: 0;
+      transform: translateY(4px);
+      transition: all 0.4s ease;
+    }
+
+    .error.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    /* --- Overlay "Prepara tus audífonos" --- */
+    .overlay {
+      position: fixed;
+      inset: 0;
+      background: rgba(3, 10, 7, 0.6);
+      backdrop-filter: blur(8px);
+      -webkit-backdrop-filter: blur(8px);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 2rem;
+      z-index: 100;
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 0.6s ease;
+    }
+
+    .overlay.show {
+      opacity: 1;
+      pointer-events: all;
+    }
+
+    .overlay-icon {
+      font-size: 5rem;
+      animation: pulse 1.4s ease-in-out infinite;
+    }
+
+    .overlay-text {
+      font-size: clamp(1.8rem, 5vw, 3.2rem);
+      font-weight: 300;
+      font-style: italic;
+      letter-spacing: 0.1em;
+      background: linear-gradient(135deg, #a8d8b0, #4a9aba);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      text-align: center;
+      padding: 0 1rem;
+    }
+
+    .overlay-sub {
+      font-size: 1rem;
+      color: #3a6a50;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      animation: blink 1.6s ease-in-out infinite;
+    }
+
+    @keyframes pulse {
+      0%, 100% { transform: scale(1); opacity: 0.8; }
+      50% { transform: scale(1.15); opacity: 1; }
+    }
+
+    @keyframes blink {
+      0%, 100% { opacity: 0.3; }
+      50% { opacity: 1; }
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(16px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+
+    canvas {
+      position: fixed;
+      inset: 0;
+      pointer-events: none;
+      z-index: 0;
+    }
+  </style>
+</head>
+<body>
+
+  <canvas id="canvas"></canvas>
+
+  <div class="overlay" id="overlay">
+    <div class="overlay-icon">🎧</div>
+    <div class="overlay-text">Prepara tus audífonos</div>
+    <div class="overlay-sub">un momento...</div>
+  </div>
+
+  <div class="gate" id="gate">
+    <h1>Palabra clave</h1>
+    <div class="input-wrap">
+      <!-- 8 rayitas = 8 letras de "xilofono" -->
+      <div class="dashes">
+        <span></span><span></span><span></span><span></span>
+        <span></span><span></span><span></span><span></span>
+      </div>
+      <input type="password" id="pwd" maxlength="20" autofocus>
+      <button onclick="check()">Infiltrar</button>
+      <span class="error" id="err">con esa palabra no detienes a nadie</span>
+    </div>
+  </div>
+
+  <script>
+    function check() {
+      const val = document.getElementById('pwd').value.trim().toLowerCase();
+      if (val === 'xilofono') {
+        sessionStorage.setItem('acceso', 'ok');
+        const overlay = document.getElementById('overlay');
+        const gate = document.getElementById('gate');
+        gate.style.transition = 'opacity 0.5s';
+        gate.style.opacity = '0';
+        overlay.classList.add('show');
+        setTimeout(() => { window.location.href = 'dedicatoria.html'; }, 3200);
+      } else {
+        const err = document.getElementById('err');
+        err.classList.remove('visible');
+        void err.offsetWidth;
+        err.classList.add('visible');
+        document.getElementById('pwd').value = '';
+        setTimeout(() => { err.classList.remove('visible'); }, 3000);
+      }
+    }
+
+    document.getElementById('pwd').addEventListener('keydown', e => {
+      if (e.key === 'Enter') check();
+    });
+
+    // Partículas más grandes, tonos verde/azul
+    const canvas = document.getElementById('canvas');
+    const ctx = canvas.getContext('2d');
+    function resize() {
+      canvas.width = window.innerWidth;
+      canvas.height = window.innerHeight;
+    }
+    resize();
+    window.addEventListener('resize', resize);
+
+    const colors = ['rgba(111,184,160,', 'rgba(74,154,186,', 'rgba(168,216,176,', 'rgba(90,170,140,'];
+
+    const particles = Array.from({ length: 65 }, () => ({
+      x: Math.random() * window.innerWidth,
+      y: Math.random() * window.innerHeight,
+      r: Math.random() * 2.8 + 1,
+      dx: (Math.random() - 0.5) * 0.2,
+      dy: -Math.random() * 0.28 - 0.06,
+      alpha: Math.random() * 0.45 + 0.1,
+      color: colors[Math.floor(Math.random() * colors.length)]
+    }));
+
+    function draw() {
+      ctx.clearRect(0, 0, canvas.width, canvas.height);
+      for (const p of particles) {
+        ctx.beginPath();
+        ctx.arc(p.x, p.y, p.r, 0, Math.PI * 2);
+        ctx.fillStyle = `${p.color}${p.alpha})`;
+        ctx.fill();
+        p.x += p.dx;
+        p.y += p.dy;
+        if (p.y < -5) {
+          p.y = canvas.height + 5;
+          p.x = Math.random() * canvas.width;
+        }
+      }
+      requestAnimationFrame(draw);
+    }
+    draw();
+  </script>
+
+</body>
+</html>
