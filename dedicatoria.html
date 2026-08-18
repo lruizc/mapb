@@ -172,7 +172,7 @@
     .fade-in.visible { opacity: 1; transform: translateY(0); }
 
     #last {
-      background: radial-gradient(ellipse at center, #061410 0%, #030a07 70%);
+      background: radial-gradient(ellipse at center, rgba(6, 20, 16, 0.6) 0%, rgba(3, 10, 7, 0.2) 70%);
     }
 
     #last .quote {
@@ -252,13 +252,13 @@
     .lyrics-link:hover { color: var(--green); border-color: var(--green); }
 
     .footer-note {
-      font-size: 0.8rem;
-      color: #3a6a50;
+      font-size: 1.05rem;
+      color: #5ca888;
       letter-spacing: 0.05em;
       text-align: center;
       margin-top: 4rem;
       font-style: italic;
-      opacity: 0.7;
+      opacity: 0.85;
     }
   </style>
 </head>
@@ -502,15 +502,17 @@
     }, { threshold: 0.15 });
     faders.forEach(f => fadeObserver.observe(f));
 
-    // Audio con inicio en segundo 15
+    // Audio con inicio en segundo 15 y a mitad de volumen
     const audio = document.getElementById('music');
     audio.currentTime = 15;
+    audio.volume = 0.5;
     const playPromise = audio.play();
     if (playPromise !== undefined) {
       playPromise.catch(() => {
         // Autoplay bloqueado, esperamos primer click
         document.addEventListener('click', () => {
           audio.currentTime = 15;
+          audio.volume = 0.5;
           audio.play();
         }, { once: true });
       });
